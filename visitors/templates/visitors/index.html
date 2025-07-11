@@ -44,6 +44,7 @@
             <th>Purpose</th>
             <th>In Time</th>
             <th>Out Time</th>
+            <th>Action</th>
         </tr>
         {% for v in visitors %}
         <tr>
@@ -52,6 +53,10 @@
             <th>{{v.purpose}}</th>
             <th> {{ v.in_time }}</th>
             <th>{{ v.out_time }}</th>
+            <th>
+                <a href="{% url 'edit' v.id %}">Edit</a>
+                <a href="{% url 'delete' v.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+            </th>
         </tr>
         {% endfor %}
     </table>

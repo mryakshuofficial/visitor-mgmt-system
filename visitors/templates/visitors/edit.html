@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Edit</title>
+</head>
+<body>
+    <h2>Edit Visitor</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" value="{{ visitor.name }}" required><br>
+    <input type="text" name="visiting_whom" value="{{ visitor.visiting_whom }}" required><br>
+    <input type="text" name="purpose" value="{{ visitor.purpose }}" required><br>
+    <input type="date" name="in_time" value="{{ visitor.in_time|date:'Y-m-d' }}" required><br>
+    <input type="date" name="out_time" value="{{ visitor.out_time|date:'Y-m-d' }}"><br>
+    <button type="submit">Update</button>
+</form>
+
+</body>
+</html>
