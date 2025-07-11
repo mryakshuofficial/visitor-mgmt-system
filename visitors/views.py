@@ -3,8 +3,16 @@ from .models import tbl_Visitors
 from django.db.models import Q  # Needed for OR search
 import calendar
 from django.db.models.functions import ExtractMonth, ExtractYear
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.template.loader import get_template            #pdf
+from django.http import HttpResponse                        #pdf
+from xhtml2pdf import pisa  
+import os                                    #pdf
+from django.conf import settings 
 
 # Create your views here.
+@login_required
 def index(request):
     if request.method == 'POST':
         visitors = tbl_Visitors.objects.all()
@@ -13,16 +21,18 @@ def index(request):
         purpose = request.POST.get("purpose")
         in_time = request.POST.get("in_time")
         out_time = request.POST.get("out_time")
+        photo = request.FILES.get("photo")  
 
         visitor = tbl_Visitors(
             name=name,
             visiting_whom=visiting_whom,
             purpose = purpose,
             in_time = in_time,
-            out_time = out_time
+            out_time = out_time,
+            photo = photo
         )
         visitor.save()
-        return redirect('/')
+        return redirect('index')
     # SEARCH BAAR START
     search = request.GET.get('search')
     if search:
@@ -61,6 +71,7 @@ def index(request):
         'whoms': whoms,
     })
 
+@login_required
 def edit(request,id):
     visitor = get_object_or_404(tbl_Visitors, id=id)  # ✅ Don't overwrite 'request'
     if request.method == 'POST':
@@ -71,10 +82,57 @@ def edit(request,id):
         visitor.out_time = request.POST.get("out_time")
 
         visitor.save()
-        return redirect('/')
+        return redirect('index')
     return render(request,'visitors/edit.html', {'visitor': visitor})
 
+@login_required
 def delete(request,id):
     visitor = get_object_or_404(tbl_Visitors, id=id)  # ✅ Don't overwrite 'request'
     visitor.delete()
-    return redirect('/')
+    return redirect('index')
+
+def login_user(request):
+    # 🔐 Agar already logged in ho, to redirect to index
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request,username=username,password=password)
+        if user :
+            login(request,user)
+            return redirect('index')
+        else:
+            return render(request, 'visitors/login.html', {'error': 'Invalid credentials'})
+    
+    return render(request, 'visitors/login.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
+
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+
+    
+    response = HttpResponse(content_type='application/pdf')
+    pisa_status = pisa.CreatePDF(
+        html,
+        dest=response,
+        link_callback=link_callback  
+    )
+    if pisa_status.err:
+        return HttpResponse('Error generating PDF: %s' % pisa_status.err)
+    return response
+
+def export_pdf(request):
+    visitors = tbl_Visitors.objects.all().order_by('-id')
+    context = {'visitors': visitors}
+    return render_to_pdf('visitors/pdf.html', context)
+
+def link_callback(uri, rel):
+    path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
+    return path

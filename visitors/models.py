@@ -7,6 +7,7 @@ class tbl_Visitors(models.Model):
     purpose = models.TextField()
     in_time = models.DateField()
     out_time = models.DateField(blank=True ,null=True )
+    photo = models.ImageField(upload_to='visitor_photos/',blank=True,null=True)
 
     def __str__(self):
         return self.name

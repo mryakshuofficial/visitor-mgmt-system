@@ -38,11 +38,14 @@
     <button type="submit">Apply</button>
 </form>
     <!-- DROPDOWN LIST END -->
-
+<a href="{% url 'logout' %}">Logout</a>  
+<a href="{% url 'export_pdf' %}" target="_blank">
+    <button>📄 Export as PDF</button>
+</a>
 
     <center>
     <h2>Add Visitor</h2>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <table> 
             <tr> 
@@ -65,6 +68,10 @@
                 <td>Out DATE</td>
                 <td><input type="date" name="out_time" required><br><br></td>
             </tr>
+            <tr>
+              <td>Visitor Photo:</td>
+              <td><input type="file" name="photo"></td>
+            </tr>
             <tr> 
                 <td><button type="submit">Submit</button></td>
             </tr>
@@ -80,6 +87,7 @@
             <th>Purpose</th>
             <th>In Time</th>
             <th>Out Time</th>
+            <th>Photo</th>
             <th>Action</th>
         </tr>
         {% for v in visitors %}
@@ -89,6 +97,11 @@
             <th>{{v.purpose}}</th>
             <th> {{ v.in_time }}</th>
             <th>{{ v.out_time }}</th>
+            <th>{% if v.photo %}
+                <img src="{{ v.photo.url }}" width="60" hight="60">                
+            {% else %} 
+            no photo
+             {% endif %}</th>
             <th>
                 <a href="{% url 'edit' v.id %}">Edit</a>
                 <a href="{% url 'delete' v.id %}" onclick="return confirm('Are you sure?')">Delete</a>
