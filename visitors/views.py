@@ -80,6 +80,8 @@ def edit(request,id):
         visitor.purpose = request.POST.get("purpose")
         visitor.in_time = request.POST.get("in_time")
         visitor.out_time = request.POST.get("out_time")
+        if request.FILES.get('photo'):
+            visitor.photo = request.FILES.get("photo")
 
         visitor.save()
         return redirect('index')

@@ -3,18 +3,88 @@
 <head>
     <meta charset="UTF-8" />
     <title>Edit</title>
+    <style>
+        * {
+    box-sizing: border-box;
+}
+
+/* Update your input style like this */
+form input[type="text"],
+form input[type="date"],
+form input[type="file"] {
+    width: 100%;
+    padding: 10px 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    display: block;
+}
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        form button {
+            width: 100%;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 0;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
+
+<div class="form-container">
     <h2>Edit Visitor</h2>
-<form method="POST">
-    {% csrf_token %}
-    <input type="text" name="name" value="{{ visitor.name }}" required><br>
-    <input type="text" name="visiting_whom" value="{{ visitor.visiting_whom }}" required><br>
-    <input type="text" name="purpose" value="{{ visitor.purpose }}" required><br>
-    <input type="date" name="in_time" value="{{ visitor.in_time|date:'Y-m-d' }}" required><br>
-    <input type="date" name="out_time" value="{{ visitor.out_time|date:'Y-m-d' }}"><br>
-    <button type="submit">Update</button>
-</form>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" name="name" value="{{ visitor.name }}" required>
+        <input type="text" name="visiting_whom" value="{{ visitor.visiting_whom }}" required>
+        <input type="text" name="purpose" value="{{ visitor.purpose }}" required>
+        <input type="date" name="in_time" value="{{ visitor.in_time|date:'Y-m-d' }}" required>
+        <input type="date" name="out_time" value="{{ visitor.out_time|date:'Y-m-d' }}">
+        <input type="file" name="photo">
+        <button type="submit">Update</button>
+    </form>
+</div>
 
 </body>
 </html>
