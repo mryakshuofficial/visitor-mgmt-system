@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor Management</title>
+</head>
+<body>
+    <center>
+    <h2>Add Visitor</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <table> 
+            <tr> 
+                <td>Visitor Name :  </td>
+                <td><input type="text" name="name" placeholder="Visitor Name" required><br></td>
+            </tr>
+             <tr> 
+                <td>Visting Whome : </td>
+                <td><input type="text" name="visiting_whom" placeholder="Visiting Whom" required><br><br></td>
+            </tr>
+             <tr> 
+                <td> Purpose :</td>
+                <td><input type="text" name="purpose" placeholder="Purpose" required><br><br></td>
+            </tr>
+             <tr> 
+                <td>iN DATE</td>
+                <td><input type="date" name="in_time" required><br><br></td>
+            </tr>
+             <tr> 
+                <td>Out DATE</td>
+                <td><input type="date" name="out_time" required><br><br></td>
+            </tr>
+            <tr> 
+                <td><button type="submit">Submit</button></td>
+            </tr>
+        </table>    
+    </form>
+    </center>
+
+    <h2>Recent Visitors</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Whom Visiting</th>
+            <th>Purpose</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+        </tr>
+        {% for v in visitors %}
+        <tr>
+            <th>{{ v.name }} </th>
+            <th>{{ v.visiting_whom }}</th>
+            <th>{{v.purpose}}</th>
+            <th> {{ v.in_time }}</th>
+            <th>{{ v.out_time }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
