@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Report</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f9;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .report-container {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 10px 15px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      width: 40%;
+      background-color: #f2f2f2;
+      color: #333;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    .back-btn {
+      display: block;
+      margin: 20px auto 0;
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      width: fit-content;
+    }
+
+    .back-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="report-container">
+    <h2>{{ student_report.name }}'s Report</h2>
+    <table>
+      <tr><th>Name</th><td>{{ student_report.name }}</td></tr>
+      <tr><th>Class</th><td>{{ student_report.student_class }}</td></tr>
+      <tr><th>Subject 1</th><td>{{ student_report.sub1 }}</td></tr>
+      <tr><th>Subject 2</th><td>{{ student_report.sub2 }}</td></tr>
+      <tr><th>Subject 3</th><td>{{ student_report.sub3 }}</td></tr>
+      <tr><th>Subject 4</th><td>{{ student_report.sub4 }}</td></tr>
+      <tr><th>Subject 5</th><td>{{ student_report.sub5 }}</td></tr>
+      <tr><th>Subject 6</th><td>{{ student_report.sub6 }}</td></tr>
+      <tr><th>Subject 7</th><td>{{ student_report.sub7 }}</td></tr>
+      <tr><th>Total</th><td>{{ student_report.total }}</td></tr>
+      <tr><th>Percentage</th><td>{{ student_report.percentage|floatformat:2 }}%</td></tr>
+    </table>
+
+    <a href="/marks/" class="back-btn">← Back to Marks</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Marks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f4f7;
+      display: flex;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Edit Fee Record</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <label>Student Name:</label>
+      <input type="text" name="name" value="{{ fee.name }}">
+
+      <label>Class:</label>
+      <input type="text" name="student_class" value="{{ fee.student_class }}">
+
+      <label>Subject 1:</label>
+      <input type="number" name="sub1" value="{{ fee.sub1 }}">
+
+      <label>Subject 2:</label>
+      <input type="number" name="sub2" value="{{ fee.sub2 }}">
+
+      <label>Subject 3:</label>
+      <input type="number" name="sub3" value="{{ fee.sub3 }}">
+
+      <label>Subject 4:</label>
+      <input type="number" name="sub4" value="{{ fee.sub4 }}">
+
+      <label>Subject 5:</label>
+      <input type="number" name="sub5" value="{{ fee.sub5 }}">
+
+      <label>Subject 6:</label>
+      <input type="number" name="sub6" value="{{ fee.sub6 }}">
+
+      <label>Subject 7:</label>
+      <input type="number" name="sub7" value="{{ fee.sub7 }}">
+
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</body>
+</html>

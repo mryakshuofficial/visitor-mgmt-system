@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Master Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            text-align: center;
+            padding: 50px;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            margin: 20px auto;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ccc;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            background: #3498db;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Master Dashboard</h1>
+
+    <div class="card">
+        <h2>Visitor Management</h2>
+        <a href="{% url 'visitors_index' %}">Go to Visitors</a>  
+    </div>
+
+    <div class="card">
+        <h2>Fees Management</h2>
+        <a href="/marks/">Go to Fees</a> <!-- Update once fees urls ready -->
+    </div>
+</body>
+</html>

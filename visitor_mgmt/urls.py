@@ -19,10 +19,16 @@ from django.urls import path, include
 from visitors import urls
 from django.conf import settings
 from django.conf.urls.static import static  
+from . import views
+from visitors.views import login_user, logout_user 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('visitors.urls')),
+    path('',views.dashboard,name='dashboard'),
+    path('visitors/', include('visitors.urls')),
+    path('marks/', include('marks.urls')),  # ✅ This makes URL path /fees/ work
+    path('login/', login_user, name='login'),  # from visitors.views
+    path('logout/', logout_user, name='logout'),  # from visitors.views
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

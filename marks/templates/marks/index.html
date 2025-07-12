@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marks Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 30px;
+    }
+
+    .filter-form,
+    .entry-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .filter-form input,
+    .filter-form select,
+    .entry-form input {
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background: #007bff;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    a.btn {
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 4px;
+      color: white;
+    }
+
+    .edit {
+      background-color: #28a745;
+    }
+
+    .delete {
+      background-color: #dc3545;
+    }
+
+    .view {
+      background-color: #6c757d;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+
+    .entry-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.entry-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+.entry-form {
+  margin: 20px auto;
+  width: 95%;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  padding: 5px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-submit {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Marks Management</h2>
+
+    <form method="get" class="filter-form">
+      <input type="text" name="search" placeholder="Search by name or class" value="{{ request.GET.search }}">
+      <select name="filter_class">
+        <option value="">-- All Classes --</option>
+        {% for cls in all_classes %}
+        <option value="{{ cls }}" {% if request.GET.filter_class == cls %}selected{% endif %}>{{ cls }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Filter</button>
+    </form>
+
+   <form method="POST" class="entry-form">
+  {% csrf_token %}
+  
+  <div class="form-row">
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label>Class:</label>
+      <input type="text" name="Class" required>
+    </div>
+
+    <div class="form-group">
+      <label>Subject 1:</label>
+      <input type="number" name="sub1" required>
+    </div>
+
+    <div class="form-group">
+      <label>Subject 2:</label>
+      <input type="number" name="sub2" required>
+    </div>
+
+    <div class="form-group">
+      <label>Subject 3:</label>
+      <input type="number" name="sub3" required>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Subject 4:</label>
+      <input type="number" name="sub4" required>
+    </div>
+
+    <div class="form-group">
+      <label>Subject 5:</label>
+      <input type="number" name="sub5" required>
+    </div>
+
+    <div class="form-group">
+      <label>Subject 6:</label>
+      <input type="number" name="sub6" required>
+    </div>
+
+    <div class="form-group">
+      <label>Subject 7:</label>
+      <input type="number" name="sub7" required>
+    </div>
+
+    <div class="form-group" style="align-self: end;">
+      <button type="submit" class="btn-submit">Submit</button>
+    </div>
+  </div>
+</form>
+
+
+
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Class</th>
+        <th>Subjects</th>
+        <th>Total</th>
+        <th>Percentage</th>
+        <th>Action</th>
+      </tr>
+      {% for f in marks %}
+      <tr>
+        <td>{{ f.name }}</td>
+        <td>{{ f.student_class }}</td>
+        <td>{{ f.sub1 }}, {{ f.sub2 }}, {{ f.sub3 }}, {{ f.sub4 }}, {{ f.sub5 }}, {{ f.sub6 }}, {{ f.sub7 }}</td>
+        <td>{{ f.total }}</td>
+        <td>{{ f.percentage }}%</td>
+        <td>
+          <a href="{% url 'marks_edit' f.id %}" class="btn edit">Edit</a>
+          <a href="{% url 'marks_delete' f.id %}" onclick="return confirm('Are you sure?')" class="btn delete">Delete</a>
+          <a href="{% url 'marks_report' f.id %}" class="btn view">View</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <a href="/" class="back-link">← Back to Dashboard</a>
+  </div>
+</body>
+</html>

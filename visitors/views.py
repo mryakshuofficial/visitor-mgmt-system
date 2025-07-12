@@ -12,8 +12,9 @@ import os                                    #pdf
 from django.conf import settings 
 
 # Create your views here.
+
 @login_required
-def index(request):
+def visitors_index(request):
     if request.method == 'POST':
         visitors = tbl_Visitors.objects.all()
         name = request.POST.get("name")
@@ -32,7 +33,7 @@ def index(request):
             photo = photo
         )
         visitor.save()
-        return redirect('index')
+        return redirect('visitors_index')
     # SEARCH BAAR START
     search = request.GET.get('search')
     if search:
@@ -84,19 +85,19 @@ def edit(request,id):
             visitor.photo = request.FILES.get("photo")
 
         visitor.save()
-        return redirect('index')
+        return redirect('visitors_index')
     return render(request,'visitors/edit.html', {'visitor': visitor})
 
 @login_required
 def delete(request,id):
     visitor = get_object_or_404(tbl_Visitors, id=id)  # ✅ Don't overwrite 'request'
     visitor.delete()
-    return redirect('index')
+    return redirect('visitors_index')
 
 def login_user(request):
     # 🔐 Agar already logged in ho, to redirect to index
     if request.user.is_authenticated:
-        return redirect('index')
+        return redirect('visitors_index')
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -105,7 +106,7 @@ def login_user(request):
         user = authenticate(request,username=username,password=password)
         if user :
             login(request,user)
-            return redirect('index')
+            return redirect('visitors_index')
         else:
             return render(request, 'visitors/login.html', {'error': 'Invalid credentials'})
     
@@ -138,3 +139,4 @@ def export_pdf(request):
 def link_callback(uri, rel):
     path = os.path.join(settings.MEDIA_ROOT, uri.replace(settings.MEDIA_URL, ""))
     return path
+
