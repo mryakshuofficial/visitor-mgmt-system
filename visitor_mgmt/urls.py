@@ -29,6 +29,8 @@ urlpatterns = [
     path('marks/', include('marks.urls')),  # ✅ This makes URL path /fees/ work
     path('login/', login_user, name='login'),  # from visitors.views
     path('logout/', logout_user, name='logout'),  # from visitors.views
+    path('fees/', include('fees_management.urls')),
+
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
