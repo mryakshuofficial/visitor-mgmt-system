@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show QR code</title>
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container h2 { font-size: 22px; color: #333; margin-bottom: 10px; }
+        .container p { font-size: 16px; margin: 8px 0; }
+        .container img { margin: 20px 0; width: 200px; height: 200px; }
+        .container a { color: #007bff; text-decoration: none; }
+        .container a:hover { text-decoration: underline; }
+        .container button {
+            padding: 12px 20px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        .container button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+        .timer {
+            font-weight: bold;
+            color: #e53935;
+            margin-top: 15px;
+        }
+        .expired-msg {
+            font-size: 18px;
+            color: red;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Scan this QR to Pay</h2>
+        <p>Payment ID: {{ payment.payment_id }}</p>
+        <img id="qr-code" src="data:image/png;base64,{{ qr_data }}" alt="QR Code" />
+        <p>Amount: ₹{{ payment.amount }}</p>
+        <p><a href="{{ upi_link }}" id="upi-link">Open UPI App</a></p>
+
+        <div class="timer">QR expires in <span id="countdown">5:00</span></div>
+        <p><strong>After payment, click below:</strong></p>
+
+        <form method="POST" action="{% url 'confirm_payment' payment.id %}">
+            {% csrf_token %}
+            <button type="submit" id="confirm-btn">I Have Paid</button>
+        </form>
+
+        <div class="expired-msg" id="expired-msg">⛔ QR Code has expired. Please generate a new one.</div>
+    </div>
+
+    <script>
+        let minutes = 5;
+        let seconds = 0;
+
+        const countdownElement = document.getElementById("countdown");
+        const qrCode = document.getElementById("qr-code");
+        const upiLink = document.getElementById("upi-link");
+        const confirmBtn = document.getElementById("confirm-btn");
+        const expiredMsg = document.getElementById("expired-msg");
+
+        const timer = setInterval(() => {
+            if (seconds === 0) {
+                if (minutes === 0) {
+                    clearInterval(timer);
+                    qrCode.style.display = "none";
+                    upiLink.style.display = "none";
+                    confirmBtn.disabled = true;
+                    expiredMsg.style.display = "block";
+                    countdownElement.innerText = "00:00";
+                    return;
+                }
+                minutes--;
+                seconds = 59;
+            } else {
+                seconds--;
+            }
+
+            let minStr = minutes.toString().padStart(2, '0');
+            let secStr = seconds.toString().padStart(2, '0');
+            countdownElement.innerText = `${minStr}:${secStr}`;
+        }, 1000);
+    </script>
+</body>
+</html>

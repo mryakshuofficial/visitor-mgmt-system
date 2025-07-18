@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            font-family: Arial, sans-serif;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 22px;
+            color: #333;
+        }
+
+        .container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container input[type="text"],
+        .container input[type="email"],
+        .container input[type="number"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        .container button {
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .container button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+   <div class="container">
+    <h2>Pay Your Fees</h2>
+
+    <label>GR Number:</label>
+    <input type="text" name="grno" id="grno" required>
+    <button type="button" onclick="fetchData()">Fetch</button>
+    <br><br>
+
+    <form method="POST">
+        {% csrf_token %}
+        Name: <input type="text" name="name" id="name" required><br>
+        Class: <input type="text" name="student_class" id="student_class" required><br>
+        Email: <input type="email" name="email" id="email" required><br>
+        Village: <input type="text" name="village" id="village"><br>
+        Mobile: <input type="text" name="mobile" id="mobile"><br>
+        Amount: <input type="number" name="amount" step="0.01" required><br>
+        <button type="submit">Generate QR</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+function fetchData() {
+    const grno = document.getElementById('grno').value;
+    fetch(`/fees/fetch_student_data/${grno}/`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not OK');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data); // 👈 Check what you get in browser console
+
+        document.querySelector('input[name="name"]').value = data.name;
+        document.querySelector('input[name="student_class"]').value = data.student_class;
+        document.querySelector('input[name="email"]').value = data.email;
+        document.querySelector('input[name="village"]').value = data.village;
+        document.querySelector('input[name="mobile"]').value = data.mobile;
+        // Add more if needed like village, mobile etc.
+    })
+    .catch(error => {
+        console.error('Error fetching student data:', error);
+        alert("Student data not found");
+    });
+}
+</script>
+</body>
+</html>

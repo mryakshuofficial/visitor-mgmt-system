@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Receipt</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 40px;
+        }
+
+        .receipt-box {
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #000;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .receipt-box h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 22px;
+        }
+
+        .receipt-box table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+
+        .receipt-box td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .receipt-box .label {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            width: 40%;
+        }
+
+        .status-paid {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-box">
+        <h2>Hostel Fee Payment Receipt</h2>
+        <table>
+            <tr>
+                <td class="label">Name</td>
+                <td>{{ payment.student_name }}</td>
+            </tr>
+            <tr>
+                <td class="label">Class</td>
+                <td>{{ payment.student_class }}</td>
+            </tr>
+            <tr>
+                <td class="label">Email</td>
+                <td>{{ payment.email }}</td>
+            </tr>
+            <tr>
+                <td class="label">Amount Paid</td>
+                <td>₹{{ payment.amount }}</td>
+            </tr>
+            <tr>
+                <td class="label">Payment ID</td>
+                <td>{{ payment.payment_id }}</td>
+            </tr>
+            <tr>
+                <td class="label">Status</td>
+                <td class="status-paid">Paid ✅</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

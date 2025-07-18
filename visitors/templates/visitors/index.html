@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Visitor Management</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .navbar .left,
+        .navbar .center,
+        .navbar .right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .navbar input[type="text"],
+        .navbar select {
+            padding: 4px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+            border: none;
+            width: 120px;
+            height: 28px;
+        }
+
+        .navbar button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            height: 30px;
+        }
+
+        .navbar button:hover {
+            background-color: #2980b9;
+        }
+
+        .navbar a {
+            text-decoration: none;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0 10px;
+        }
+
+        form table {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+
+        form table td:first-child {
+            width: 180px;
+            font-weight: bold;
+            vertical-align: middle;
+        }
+
+        form table input[type="text"],
+        form table input[type="date"],
+        form table input[type="file"] {
+            width: 220px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        form table button {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background: #2ecc71;
+            color: white;
+        }
+
+        form table button:hover {
+            background-color: #27ae60;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            font-size: 14px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        img {
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <!-- LEFT: Search -->
+        <form method="GET" class="left">
+            <input type="text" name="search" placeholder="Search..." value="{{ request.GET.search }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- CENTER: Dropdowns -->
+        <form method="GET" class="center">
+            <select name="month">
+                <option value="">Month</option>
+                {% for m in months %}
+                <option value="{{ m }}" {% if request.GET.month == m %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="year">
+                <option value="">Year</option>
+                {% for y in years %}
+                <option value="{{ y }}" {% if request.GET.year == y %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+            </select>
+
+            <select name="whom">
+                <option value="">Whom</option>
+                {% for w in whoms %}
+                <option value="{{ w }}" {% if request.GET.whom == w %}selected{% endif %}>{{ w }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
+
+        <!-- RIGHT: Actions -->
+        <div class="right">
+            <a href="{% url 'export_pdf' %}" target="_blank"><button>📄 Export PDF</button></a>
+            <a href="{% url 'logout' %}"><button>Logout</button></a>
+        </div>
+    </div>
+    <!-- NAVBAR END -->
+
+    <h2>Add Visitor</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table>
+            <tr><td>Visitor Name:</td><td><input type="text" name="name" required></td></tr>
+            <tr><td>Visiting Whom:</td><td><input type="text" name="visiting_whom" required></td></tr>
+            <tr><td>Purpose:</td><td><input type="text" name="purpose" required></td></tr>
+            <tr><td>In Date:</td><td><input type="date" name="in_time" required></td></tr>
+            <tr><td>Out Date:</td><td><input type="date" name="out_time" required></td></tr>
+            <tr><td>Visitor Photo:</td><td><input type="file" name="photo"></td></tr>
+            <tr><td colspan="2"><button type="submit">Submit</button></td></tr>
+        </table>
+    </form>
+
+    <h2>Recent Visitors</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Whom Visiting</th>
+            <th>Purpose</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+            <th>Photo</th>
+            <th>Action</th>
+        </tr>
+        {% for v in visitors %}
+        <tr>
+            <td>{{ v.name }}</td>
+            <td>{{ v.visiting_whom }}</td>
+            <td>{{ v.purpose }}</td>
+            <td>{{ v.in_time }}</td>
+            <td>{{ v.out_time }}</td>
+            <td>
+                {% if v.photo %}
+                <img src="{{ v.photo.url }}" width="60" height="60">
+                {% else %}No photo{% endif %}
+            </td>
+            <td>
+                <a href="{% url 'edit' v.id %}">Edit</a> |
+                <a href="{% url 'delete' v.id %}" onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>
