@@ -8,8 +8,11 @@ class FeePayment(models.Model):
     student_class = models.CharField(max_length=50)
     amount = models.DecimalField(max_digits=8, decimal_places=2)
     email = models.EmailField()
+<<<<<<< HEAD
     village = models.CharField(max_length=50, blank=True, null=True)
     mobile = models.CharField(max_length=15, blank=True, null=True)
+=======
+>>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
     payment_id = models.CharField(max_length=100, unique=True)
     is_paid = models.BooleanField(default=False)
     payment_date = models.DateTimeField(auto_now_add=True)

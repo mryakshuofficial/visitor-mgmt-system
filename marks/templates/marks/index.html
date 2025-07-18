@@ -193,6 +193,7 @@
    <form method="POST" class="entry-form">
   {% csrf_token %}
   
+<<<<<<< HEAD
     <div class="form-group">
       <label>GR No:</label>
       <input type="text" id="gr_no" name="gr_no" placeholder="Enter GR No" required>
@@ -205,10 +206,17 @@
     <div class="form-group">
       <label>Name:</label>
       <input type="text" id="name" name="name" required>
+=======
+  <div class="form-row">
+    <div class="form-group">
+      <label>Name:</label>
+      <input type="text" name="name" required>
+>>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
     </div>
 
     <div class="form-group">
       <label>Class:</label>
+<<<<<<< HEAD
       <input type="text" id="student_class" name="Class" required>
     </div>
 
@@ -217,6 +225,10 @@
       <label>Class:</label>
       <input type="text" name="Class" required>
     </div> {% endcomment %}
+=======
+      <input type="text" name="Class" required>
+    </div>
+>>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
 
     <div class="form-group">
       <label>Subject 1:</label>
@@ -290,6 +302,7 @@
 
     <a href="/" class="back-link">← Back to Dashboard</a>
   </div>
+<<<<<<< HEAD
   <script>
 function fetchStudent() {
     var grNo = document.getElementById("gr_no").value;
@@ -307,5 +320,7 @@ function fetchStudent() {
 }
 </script>
 
+=======
+>>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
 </body>
 </html>
