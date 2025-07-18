@@ -43,10 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'marks',
     'fees_management',
-<<<<<<< HEAD
+
     'masterstudent',
-=======
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
 ]
 
 MIDDLEWARE = [

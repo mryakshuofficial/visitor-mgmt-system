@@ -3,13 +3,10 @@ from django.contrib.auth.decorators import login_required
 from . import urls
 from .models import tbl_Studentmarks
 from django.db.models import Q
-<<<<<<< HEAD
 from django.http import JsonResponse
 from masterstudent.models import MasterStudent
 
 
-=======
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
 # Create your views here.
 # @login_required
 def marks_index(request):
@@ -86,8 +83,6 @@ def marks_delete(request,id):
 def marks_report(request,id):
     student_report = get_object_or_404(tbl_Studentmarks,id=id)
     return render(request,'marks/report.html',{'student_report':student_report})
-<<<<<<< HEAD
-
 
 def fetch_student(request, gr_no):
     try:
@@ -100,8 +95,6 @@ def fetch_student(request, gr_no):
     except MasterStudent.DoesNotExist:
         data = {'success': False}
     return JsonResponse(data)
-=======
-    
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
+
 
 

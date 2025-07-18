@@ -54,7 +54,6 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
    <div class="container">
     <h2>Pay Your Fees</h2>
 
@@ -101,18 +100,5 @@ function fetchData() {
     });
 }
 </script>
-=======
-    <div class="container">
-        <h2>Pay Your Fees</h2>
-        <form method="POST">
-            {% csrf_token %}
-            Name: <input type="text" name="name" required><br>
-            Class: <input type="text" name="student_class" required><br>
-            Email: <input type="email" name="email" required><br>
-            Amount: <input type="number" name="amount" step="0.01" required><br>
-            <button type="submit">Generate QR</button>
-        </form>
-    </div>
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
 </body>
 </html>

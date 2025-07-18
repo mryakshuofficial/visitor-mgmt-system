@@ -179,21 +179,9 @@
   <div class="container">
     <h2>Marks Management</h2>
 
-    <form method="get" class="filter-form">
-      <input type="text" name="search" placeholder="Search by name or class" value="{{ request.GET.search }}">
-      <select name="filter_class">
-        <option value="">-- All Classes --</option>
-        {% for cls in all_classes %}
-        <option value="{{ cls }}" {% if request.GET.filter_class == cls %}selected{% endif %}>{{ cls }}</option>
-        {% endfor %}
-      </select>
-      <button type="submit">Filter</button>
-    </form>
-
-   <form method="POST" class="entry-form">
+    <form method="POST" class="entry-form">
   {% csrf_token %}
-  
-<<<<<<< HEAD
+  <div class="form-row">
     <div class="form-group">
       <label>GR No:</label>
       <input type="text" id="gr_no" name="gr_no" placeholder="Enter GR No" required>
@@ -202,34 +190,21 @@
     <div class="form-group" style="align-self: end;">
       <button type="button" class="btn-submit" onclick="fetchStudent()">Fetch</button>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label>Name:</label>
-      <input type="text" id="name" name="name" required>
-=======
   <div class="form-row">
     <div class="form-group">
       <label>Name:</label>
-      <input type="text" name="name" required>
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
+      <input type="text" id="name" name="name" required>
     </div>
 
     <div class="form-group">
       <label>Class:</label>
-<<<<<<< HEAD
       <input type="text" id="student_class" name="Class" required>
     </div>
+  </div>
 
-
-    {% comment %} <div class="form-group">
-      <label>Class:</label>
-      <input type="text" name="Class" required>
-    </div> {% endcomment %}
-=======
-      <input type="text" name="Class" required>
-    </div>
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
-
+  <div class="form-row">
     <div class="form-group">
       <label>Subject 1:</label>
       <input type="number" name="sub1" required>
@@ -266,15 +241,14 @@
       <label>Subject 7:</label>
       <input type="number" name="sub7" required>
     </div>
+  </div>
 
+  <div class="form-row">
     <div class="form-group" style="align-self: end;">
       <button type="submit" class="btn-submit">Submit</button>
     </div>
   </div>
 </form>
-
-
-
     <table>
       <tr>
         <th>Name</th>
@@ -302,7 +276,7 @@
 
     <a href="/" class="back-link">← Back to Dashboard</a>
   </div>
-<<<<<<< HEAD
+
   <script>
 function fetchStudent() {
     var grNo = document.getElementById("gr_no").value;
@@ -319,8 +293,5 @@ function fetchStudent() {
     });
 }
 </script>
-
-=======
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
 </body>
 </html>

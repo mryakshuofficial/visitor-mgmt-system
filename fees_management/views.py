@@ -14,13 +14,10 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 # for EMAIL
 from django.core.mail import EmailMessage
-<<<<<<< HEAD
+
 #fetch data from master page
 from django.http import JsonResponse
 from masterstudent.models import MasterStudent
-=======
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
-
 
 def fees_index(request):
     if request.method == 'POST':
@@ -96,9 +93,6 @@ def confirm_payment(request, payment_id):
             return response
         else:
             return HttpResponse("Error generating PDF")
-
-
-<<<<<<< HEAD
     return redirect('fees_index')
 
 def fetch_student_data(request, grno):
@@ -114,6 +108,5 @@ def fetch_student_data(request, grno):
         return JsonResponse(data)
     except MasterStudent.DoesNotExist:
         return JsonResponse({'error': 'Student not found'}, status=404)
-=======
+
     return redirect('fees_index')
->>>>>>> b0f15a9ef4d613e18f17b81ef6b147bd47826eff
