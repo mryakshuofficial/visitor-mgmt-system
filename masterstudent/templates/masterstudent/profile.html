@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Profile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4CAF50;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
+        h2 {
+            margin: 10px 0;
+            font-size: 26px;
+            text-align: center;
+            color: #333;
+        }
+
+        .info {
+            margin-top: 25px;
+        }
+
+        .info p {
+            font-size: 18px;
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .info p span {
+            font-weight: bold;
+            color: #222;
+        }
+
+        .marksheet {
+            margin-top: 30px;
+        }
+
+        .marksheet h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #4CAF50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .logout {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .logout a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .logout a:hover {
+            background: #c0392b;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile-container">
+    <img src="{{ student.photo_path.url }}" alt="Profile Photo" class="profile-img">
+    <h2>{{ student.fname }} {{ student.lname }} {{ student.sername }}</h2>
+
+    <div class="info">
+        <p><span>GR Number:</span> {{ student.gr_no }}</p>
+        <p><span>Village:</span> {{ student.village }}</p>
+        <p><span>Mobile:</span> {{ student.mobile }}</p>
+        <p><span>Email:</span> {{ student.email }}</p>
+        <p><span>Aadhar:</span> **** **** {{ student.aadhar_number|slice:"-4:" }}</p>
+    </div>
+
+    <div class="marksheet">
+        <h3>Marksheet</h3>
+        {% if marks %}
+        <table>
+            <tr>
+                <th>Gr No</th>
+                <th>Name</th>
+                <th>Gujarati</th>
+                <th>Hindi</th>
+                <th>English</th>
+                <th>Sanskrit</th>
+                <th>Science</th>
+                <th>Social Sci</th>
+                <th>Computer</th>
+                <th>Total</th>
+                <th>Percentage</th>
+            </tr>
+            {% for m in marks %}
+            <tr>
+                <td>{{ m.gr_no }}</td>
+                <td>{{ m.name }}</td>
+                <td>{{ m.sub1 }}</td>
+                <td>{{ m.sub2 }}</td>
+                <td>{{ m.sub3 }}</td>
+                <td>{{ m.sub4 }}</td>
+                <td>{{ m.sub5 }}</td>
+                <td>{{ m.sub6 }}</td>
+                <td>{{ m.sub7 }}</td>
+                <td>{{ m.total }}</td>
+                <td>{{ m.percentage }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p style="text-align:center;">No marks data available for this student.</p>
+        {% endif %}
+    </div>
+
+    <div class="logout">
+        <a href="{% url 'student_login' %}">Logout</a>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Student Profile</title>
+</head>
+<body>
+    <!-- templates/student_profile_view.html -->
+<h2>Welcome, {{ student.fname }} {{ student.surname }}</h2>
+<p><strong>GR No:</strong> {{ student.gr_no }}</p>
+<p><strong>Mobile:</strong> {{ student.mobile }}</p>
+<img src="{{ student.photo_path.url }}" width="120px"><br><br>
+
+<h3>Marksheet</h3>
+{% if marks %}
+<table border="1">
+  <tr>
+    <th>Gr No</th>
+    <th>Name</th>
+    <th>Gujarati</th>
+    <th>Hindi</th>
+    <th>English</th>
+    <th>Sanskrit</th>
+    <th>Science</th>
+    <th>Social Sci</th>
+    <th>Computer</th>
+    <th>Total</th>
+    <th>Percentage</th>
+  </tr>
+  {% for m in marks %}
+  <tr>
+    <td>{{ m.gr_no }}</td>
+    <td>{{ m.name }}</td>
+    <td>{{ m.sub1 }}</td>
+    <td>{{ m.sub2 }}</td>
+    <td>{{ m.sub3 }}</td>
+    <td>{{ m.sub4 }}</td>
+    <td>{{ m.sub5 }}</td>
+    <td>{{ m.sub6 }}</td>
+    <td>{{ m.sub7 }}</td>
+    <td>{{ m.total }}</td>
+    <td>{{ m.percentage }}%</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>No marks data available for this student.</p>
+{% endif %}
+
+</body>
+</html> {% endcomment %}

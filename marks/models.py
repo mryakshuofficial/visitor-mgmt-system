@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class tbl_Studentmarks(models.Model):
+    gr_no = models.CharField(max_length=20)
     name = models.CharField(max_length=50)
     student_class = models.CharField(max_length=50)
 

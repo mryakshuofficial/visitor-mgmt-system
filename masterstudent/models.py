@@ -15,7 +15,7 @@ class MasterStudent(models.Model):
     email = models.EmailField(blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, null=True)
     dob = models.DateField(blank=True, null=True)
-    photo_path = models.ImageField(upload_to='student_photos/', blank=True, null=True)
+    photo_path = models.ImageField(upload_to='photos/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.gr_no} - {self.name}"

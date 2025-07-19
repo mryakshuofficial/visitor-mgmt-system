@@ -38,7 +38,7 @@ def fees_index(request):
             is_paid=False,
         )
         # Generate UPI QR Code 
-        upi_link = f'upi://pay?pa=yash0808080808-1@okicici&pn=Yash%20Prajapati&am=50&cu=INR'
+        upi_link = f'upi://pay?pa=yash0808080808-1@okicici&pn=Yash%20Prajapati&am={amount}&cu=INR'
         qr_img = qrcode.make(upi_link)
         buffer = BytesIO()
         qr_img.save(buffer)

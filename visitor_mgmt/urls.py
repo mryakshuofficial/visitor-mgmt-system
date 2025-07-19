@@ -30,7 +30,8 @@ urlpatterns = [
     path('login/', login_user, name='login'),  # from visitors.views
     path('logout/', logout_user, name='logout'),  # from visitors.views
     path('fees/', include('fees_management.urls')),
+    path('masterstudent/', include('masterstudent.urls')),
 
 ] 
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

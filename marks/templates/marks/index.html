@@ -251,6 +251,7 @@
 </form>
     <table>
       <tr>
+        <th>Gr bo</th>
         <th>Name</th>
         <th>Class</th>
         <th>Subjects</th>
@@ -260,6 +261,7 @@
       </tr>
       {% for f in marks %}
       <tr>
+        <td>{{ f.gr_no }}</td>
         <td>{{ f.name }}</td>
         <td>{{ f.student_class }}</td>
         <td>{{ f.sub1 }}, {{ f.sub2 }}, {{ f.sub3 }}, {{ f.sub4 }}, {{ f.sub5 }}, {{ f.sub6 }}, {{ f.sub7 }}</td>

@@ -11,6 +11,7 @@ from masterstudent.models import MasterStudent
 # @login_required
 def marks_index(request):
     if request.method =='POST':
+        gr_no = request.POST.get('gr_no')
         name = request.POST.get('name')
         Class = request.POST.get('Class')
         marks = [int(request.POST.get(f'sub{i}')) for i in range(1, 8)]
@@ -18,6 +19,7 @@ def marks_index(request):
         percentage = total / 7
 
         studentmarks = tbl_Studentmarks(
+        gr_no=gr_no,
         name=name,
         student_class = Class,
         sub1=marks[0],
