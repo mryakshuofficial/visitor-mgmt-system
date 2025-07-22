@@ -3,6 +3,7 @@ from masterstudent import urls
 from django.shortcuts import render
 from .models import MasterStudent  # adjust your import if needed
 from marks.models import tbl_Studentmarks  # import from your marks app
+from django.urls import reverse
 
 # Create your views here.
 def student_profile_login(request):
@@ -10,8 +11,16 @@ def student_profile_login(request):
         gr_no = request.POST.get('gr_no')
         password = request.POST.get('password')
 
+        if gr_no =='admin' and password=='admin':
+            # qry = request.GET.get('qry')  #createed a new view bcz search action is redirected auto in login page ....
+            # if qry:
+            #     allrecords = MasterStudent.objects.filter(gr_no__icontains=qry) | MasterStudent.objects.filter(village__icontains=qry) | MasterStudent.objects.filter(name__icontains=qry)
+            # else:
+            allrecords = MasterStudent.objects.all()
+            allrecords = allrecords.order_by('-gr_no')
+            return render(request, 'masterstudent/allrecord.html',{'allrecords':allrecords})
+
         if password != 'admin':
-            print("hello",password)
             return render(request, 'masterstudent/login.html', {'error': 'Invalid password.'})
         else:
             try:
@@ -26,12 +35,19 @@ def student_profile_login(request):
     return render(request, 'masterstudent/login.html')
 
 def student_profile_view(request, gr_no):
-    student = get_object_or_404(StudentMaster, gr_no=gr_no)
-    
-    # Yahi sabse important line hai: sirf usi GR No ke marks fetch karo
+    student = get_object_or_404(MasterStudent, gr_no=gr_no)
     marks = tbl_Studentmarks.objects.filter(gr_no=gr_no)
 
-    return render(request, 'student_profile_view.html', {
+    return render(request, 'masterstudent/profile.html', {
         'student': student,
         'marks': marks
     })
+
+def admin_search_view(request):
+    qry = request.GET.get('qry')
+    if qry:
+        allrecords = MasterStudent.objects.filter(gr_no__icontains=qry) | MasterStudent.objects.filter(village__icontains=qry) | MasterStudent.objects.filter(name__icontains=qry)
+    else:
+        allrecords = MasterStudent.objects.all()
+    allrecords = allrecords.order_by('-gr_no')
+    return render(request, 'masterstudent/allrecord.html', {'allrecords': allrecords})

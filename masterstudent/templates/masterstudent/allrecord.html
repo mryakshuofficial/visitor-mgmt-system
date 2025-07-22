@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Master page all  records</title>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f8f9fa;
+  }
+
+  /* Wrapper for page content */
+  body > div {
+    margin: 0 2in;
+    padding-top: 80px; /* height of the fixed header */
+  }
+
+  h2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px 0;
+    background-color: white;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  img {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+</style>
+
+<body>
+      <div>
+   <!-- <h2>gr is {{allrecords.0.gr_no}}</h2> -->
+   <h2>All Student Records</h2>
+    {% csrf_token %}
+   <form  method="GET" action="{% url 'admin_search_view' %}">
+      <input type="text" name="qry" value="{{ request.GET.query }}"> <input type="submit" value="submit">
+   </form>
+<table border="1">
+  <tr>
+    <th>GR No</th>
+    <th>Full Name</th>
+    <th>Class</th>
+    <th>Village</th>
+    <th>Photo</th>
+  </tr>
+  {% for student in allrecords %}
+  <tr>
+    <td>{{ student.gr_no }}</td>
+    <td>
+     <a href="{% url 'view' student.gr_no %}" target='_blank'>
+        {{ student.fname }} {{ student.lname }} {{ student.surname }}
+      </a>
+    </td>
+    <td>{{ student.student_class }}</td>
+    <td>{{ student.village }}</td>
+    <td>
+      <img src="{{ student.photo_path.url }}" width="50" height="50">
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+</body>
+</html>

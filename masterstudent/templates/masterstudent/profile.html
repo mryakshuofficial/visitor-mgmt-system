@@ -136,6 +136,7 @@
         {% if marks %}
         <table>
             <tr>
+                {% comment %} <th>Class</th> {% endcomment %}
                 <th>Gr No</th>
                 <th>Name</th>
                 <th>Gujarati</th>
@@ -150,6 +151,7 @@
             </tr>
             {% for m in marks %}
             <tr>
+                {% comment %} <td>{{ m.student_class }}</td> {% endcomment %}
                 <td>{{ m.gr_no }}</td>
                 <td>{{ m.name }}</td>
                 <td>{{ m.sub1 }}</td>
