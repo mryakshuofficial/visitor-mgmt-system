@@ -4,6 +4,7 @@ from django.shortcuts import render
 from .models import MasterStudent  # adjust your import if needed
 from marks.models import tbl_Studentmarks  # import from your marks app
 from django.urls import reverse
+from student_documents.models import StudentDocument
 
 # Create your views here.
 def student_profile_login(request):
@@ -27,7 +28,12 @@ def student_profile_login(request):
                 # student = MasterStudent.objects.get(gr_no=gr_no)
                 student = MasterStudent.objects.get(gr_no=gr_no)
                 marks = tbl_Studentmarks.objects.filter(gr_no=gr_no)
-                # return render(request,'masterstudent/profile.html')
+                documents = StudentDocument.objects.filter(student=student)
+                return render(request, 'masterstudent/profile.html', {
+                    'student': student,
+                    'marks': marks,
+                    'documents': documents,
+                })
                 return render(request, 'masterstudent/profile.html', {'student': student, 'marks': marks})
             except MasterStudent.DoesNotExist:
                 return render(request, 'masterstudent/login.html', {'error': 'Student not found.'})
@@ -37,10 +43,12 @@ def student_profile_login(request):
 def student_profile_view(request, gr_no):
     student = get_object_or_404(MasterStudent, gr_no=gr_no)
     marks = tbl_Studentmarks.objects.filter(gr_no=gr_no)
+    documents = StudentDocument.objects.filter(student=student)
 
     return render(request, 'masterstudent/profile.html', {
         'student': student,
-        'marks': marks
+        'marks': marks,
+        'documents': documents,
     })
 
 def admin_search_view(request):

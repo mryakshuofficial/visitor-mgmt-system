@@ -31,6 +31,7 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),  # from visitors.views
     path('fees/', include('fees_management.urls')),
     path('masterstudent/', include('masterstudent.urls')),
+    path('documents/', include('student_documents.urls')),
 
 ] 
 if settings.DEBUG:

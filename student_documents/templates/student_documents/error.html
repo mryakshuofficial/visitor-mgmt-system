@@ -1,0 +1,12 @@
+<!-- student_documents/templates/student_documents/error.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Error</title>
+</head>
+<body>
+    <h2 style="color:red;">Error Occurred</h2>
+    <p>{{ error }}</p>
+    <a href="{% url 'upload_document' %}">Go Back</a>
+</body>
+</html>

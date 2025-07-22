@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Document</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 40px 80px; /* 2 inches approx on both sides */
+        background-color: #f5f5f5;
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #2e7d32;
+        color: white;
+        text-transform: uppercase;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    select,
+    input[type="file"] {
+        width: 100%;
+        padding: 6px;
+        font-size: 14px;
+    }
+
+    button[type="submit"] {
+        background-color: #388e3c;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #2e7d32;
+    }
+</style>
+
+<body>
+   <h2>Upload Documents</h2>
+<table border="1" cellspacing="0" cellpadding="5">
+    <tr>
+        <th>GR No</th>
+        <th>Name</th>
+        <th>Village</th>
+        <th>Document Type</th>
+        <th>Document File</th>
+        <th>Upload</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <td>{{ student.gr_no }}
+                <input type="hidden" name="gr_no" value="{{ student.gr_no }}">
+            </td>
+            <td>{{ student.fname }} {{ student.lname }} {{ student.surname }}</td>
+            <td>{{ student.village }}</td>
+            <td>
+                <select name="document_type" required>
+                  <option value="">-- Select Document Type --</option>
+                  {% for code, label in document_types %}
+                      <option value="{{ code }}">{{ label }}</option>
+                  {% endfor %}
+                </select>
+            </td>
+            <td>
+                <input type="file" name="document" required>
+            </td>
+            <td>
+                <button type="submit">Upload</button>
+            </td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

@@ -170,6 +170,28 @@
         <p style="text-align:center;">No marks data available for this student.</p>
         {% endif %}
     </div>
+<div class="marksheet">
+    <h3 style="text-align:center;">Uploaded Documents</h3>
+
+    {% if documents %}
+    <table>
+        <tr>
+            <th>Document Type</th>
+            <th>Uploaded At</th>
+            <th>Download</th>
+        </tr>
+        {% for doc in documents %}
+        <tr>
+            <td>{{ doc.document_type|capfirst }}</td>
+            <td>{{ doc.uploaded_at|date:"Y-m-d H:i" }}</td>
+            <td><a href="{{ doc.document_file.url }}" download>Download</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p style="text-align:center;">No documents uploaded yet.</p>
+    {% endif %}
+</div>
 
     <div class="logout">
         <a href="{% url 'student_login' %}">Logout</a>

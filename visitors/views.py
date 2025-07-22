@@ -95,7 +95,7 @@ def delete(request,id):
     return redirect('visitors_index')
 
 def login_user(request):
-    # 🔐 Agar already logged in ho, to redirect to index
+    #  Agar already logged in ho, to redirect to index
     if request.user.is_authenticated:
         return redirect('visitors_index')
 
