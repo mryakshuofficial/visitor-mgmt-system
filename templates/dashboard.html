@@ -29,31 +29,36 @@
 </head>
 <body>
     <h1>Welcome to Master Dashboard</h1>
-
+    <div class="card">
+        <h2>Student Profile</h2>
+        <a href="/masterstudent/">Go to profile</a> <!-- Update once fees urls ready -->
+    </div>
+    
+    <div class="card">
+        <h2>Add Marks</h2>
+        <a href="/marks/">Go to Marks</a> <!-- Update once fees urls ready -->
+    </div>
+    
+    <div class="card">
+        <h2>Add Student Documents</h2>
+        <a href="/documents/">Go to Documents</a> 
+        {% comment %} <a href="{% url 'upload_document' %}">Go to Documents</a> {% endcomment %}
+    </div>
+    
+    <div class="card">
+        <h2>Fees Pay</h2>
+        <a href="/fees/">Go to Fees</a> <!-- Update once fees urls ready -->
+    </div>
+    
     <div class="card">
         <h2>Visitor Management</h2>
         <a href="{% url 'visitors_index' %}">Go to Visitors</a>  
     </div>
 
     <div class="card">
-        <h2>Marks Management</h2>
-        <a href="/marks/">Go to Marks</a> <!-- Update once fees urls ready -->
+        <h2>Feedback</h2>
+        <a href="{% url 'submit_feedback' %}">Go to Visitors</a>  
     </div>
 
-    <div class="card">
-        <h2>Fees Management</h2>
-        <a href="/fees/">Go to Fees</a> <!-- Update once fees urls ready -->
-    </div>
-
-    <div class="card">
-        <h2>Student Profile</h2>
-        <a href="/masterstudent/">Go to profile</a> <!-- Update once fees urls ready -->
-    </div>
-
-    <div class="card">
-        <h2>Student Documents</h2>
-        <a href="/documents/">Go to Documents</a> 
-        {% comment %} <a href="{% url 'upload_document' %}">Go to Documents</a> {% endcomment %}
-    </div>
 </body>
 </html>

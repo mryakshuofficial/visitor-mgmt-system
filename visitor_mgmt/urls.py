@@ -32,6 +32,7 @@ urlpatterns = [
     path('fees/', include('fees_management.urls')),
     path('masterstudent/', include('masterstudent.urls')),
     path('documents/', include('student_documents.urls')),
+    path('feedback/', include('feedback.urls')),
 
 ] 
 if settings.DEBUG:

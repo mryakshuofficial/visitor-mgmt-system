@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Feedbacks</title>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .solved {
+            background-color: #d4edda;
+        }
+        .pending {
+            background-color: #f8d7da;
+        }
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-solved {
+            background-color: green;
+        }
+        .btn-pending {
+            background-color: red;
+        }
+        .p{
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <h2>All Feedbacks</h2>
+
+    {% for feedback in feedbacks %}
+        <div class="card {% if feedback.is_solved %}solved{% else %}pending{% endif %}">
+            <p class='p'><strong>Message :</strong> {{ feedback.message }}</p>
+            <p><small>Submitted: {{ feedback.submitted_at }}</small></p>
+
+            <form method="post" action="{% url 'toggle_feedback_status' feedback.id %}">
+                {% csrf_token %}
+                {% if feedback.is_solved %}
+                    <button class="btn btn-pending" type="submit">Mark as Pending</button>
+                {% else %}
+                    <button class="btn btn-solved" type="submit">Mark as Solved</button>
+                {% endif %}
+            </form>
+        </div>
+    {% endfor %}
+    <a href="/">🏠 Go back to Home</a>
+</body>
+</html>

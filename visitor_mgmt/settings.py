@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-6ik)^8121(j-yc!l+52kiij3@+o$tqv!j$lx+%t1w01xmj7t%m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.2.43', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['192.168.2.34', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'marks',
     'fees_management',
     'masterstudent',
-    'student_documents'
+    'student_documents',
+    'feedback'
 ]
 
 MIDDLEWARE = [
