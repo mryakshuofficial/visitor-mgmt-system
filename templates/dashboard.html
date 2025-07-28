@@ -3,62 +3,204 @@
 <head>
     <title>Master Dashboard</title>
     <style>
-        body {
-            font-family: Arial;
-            background: #f4f4f4;
-            text-align: center;
-            padding: 50px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            min-height: 100vh;
+        }
+
+        /* Outer Wrapper for margin */
+        .dashboard-wrapper {
+            max-width: 2400px;
+            margin: 0 auto;
+            padding: 15px 60px; /* left and right 80px ~ 5 inches on large screens */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #ffffff;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 12px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(to right, #1e3c72, #2a5298); 
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        /* Layout: sidebar + main content */
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(to bottom, #ACBB78, #218f8fff);
+            padding: 20px;
+            margin: 20px 20px 20px 0;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            color: #2c3e50;
+        }
+
+        .sidebar-card {
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            border-radius: 12px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            color: #2c3e50;
+            text-align: left;
+        }
+
+        .sidebar-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+
+        .sidebar-card a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            padding: 30px 20px;
+        }
+
         .card {
             background: white;
-            padding: 30px;
+            padding: 20px;
             margin: 20px auto;
             width: 250px;
             border-radius: 10px;
             box-shadow: 0 2px 8px #ccc;
+            text-align: center;
         }
-        a {
+
+        .card a {
             text-decoration: none;
             color: white;
             background: #3498db;
             padding: 10px 20px;
             border-radius: 5px;
             display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Marquee */
+        marquee {
+            margin: 20px 0;
+            color: red;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to right, #fc466b, #3f5efb);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <h1>Welcome to Master Dashboard</h1>
-    <div class="card">
-        <h2>Student Profile</h2>
-        <a href="/masterstudent/">Go to profile</a> <!-- Update once fees urls ready -->
-    </div>
-    
-    <div class="card">
-        <h2>Add Marks</h2>
-        <a href="/marks/">Go to Marks</a> <!-- Update once fees urls ready -->
-    </div>
-    
-    <div class="card">
-        <h2>Add Student Documents</h2>
-        <a href="/documents/">Go to Documents</a> 
-        {% comment %} <a href="{% url 'upload_document' %}">Go to Documents</a> {% endcomment %}
-    </div>
-    
-    <div class="card">
-        <h2>Fees Pay</h2>
-        <a href="/fees/">Go to Fees</a> <!-- Update once fees urls ready -->
-    </div>
-    
-    <div class="card">
-        <h2>Visitor Management</h2>
-        <a href="{% url 'visitors_index' %}">Go to Visitors</a>  
+
+<div class="dashboard-wrapper">
+
+    <!-- Header -->
+    <header>
+        Welcome to Hostel Management System
+    </header>
+
+    <!-- Body Layout -->
+    <div class="container">
+        
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>📂 Apps</h2>
+
+            <div class="sidebar-card">
+                <a href="/masterstudent/"><i class="fas fa-user-graduate"></i> Student Profile</a>
+            </div>
+
+            <div class="sidebar-card">
+                <a href="/marks/"><i class="fas fa-clipboard-list"></i> Add Marks</a>
+            </div>
+
+            <div class="sidebar-card">
+                <a href="/documents/"><i class="fas fa-file-alt"></i> Student Documents</a>
+            </div>
+
+            <div class="sidebar-card">
+                <a href="/fees/"><i class="fas fa-money-check-alt"></i> Fees Pay</a>
+            </div>
+
+            <div class="sidebar-card">
+                <a href="{% url 'visitors_index' %}"><i class="fas fa-door-open"></i> Visitor Management</a>
+            </div>
+
+            <div class="sidebar-card">
+                <a href="{% url 'submit_feedback' %}"><i class="fas fa-comments"></i> Feedback</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+
+            <!-- Marquee Notices -->
+            {% if notices %}
+            <marquee behavior="alternate" direction="left" scrollamount="7">
+                {% for notice in notices %}
+                    📢 {{ notice.title }} - {{ notice.content }} &nbsp;&nbsp;&nbsp;
+                {% endfor %}
+            </marquee>
+            {% endif %}
+
+        </div>
     </div>
 
-    <div class="card">
-        <h2>Feedback</h2>
-        <a href="{% url 'submit_feedback' %}">Go to Visitors</a>  
-    </div>
+    <!-- Footer -->
+    <footer>
+        <p style="font-size: 14px;">
+            © Hostel Management System. All rights reserved by 
+            <strong><i class="fab fa-instagram"></i> mr_yakshu_official</strong>.
+        </p>
+    </footer>
+
+</div>
 
 </body>
 </html>

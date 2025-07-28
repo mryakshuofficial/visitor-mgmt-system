@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'fees_management',
     'masterstudent',
     'student_documents',
-    'feedback'
+    'feedback',
+    'notice',
 ]
 
 MIDDLEWARE = [
