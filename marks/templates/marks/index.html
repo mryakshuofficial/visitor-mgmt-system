@@ -16,7 +16,7 @@
       max-width: 1200px;
       margin: auto;
       background: white;
-      padding: 20px 30px;
+      padding: 30px;
       border-radius: 10px;
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
@@ -27,36 +27,58 @@
       margin-bottom: 30px;
     }
 
-    .filter-form,
-    .entry-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      justify-content: space-between;
+    form {
       margin-bottom: 30px;
     }
 
-    .filter-form input,
-    .filter-form select,
-    .entry-form input {
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .entry-form {
+      margin: 20px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 15px;
+      justify-content: space-between;
+    }
+
+    .form-group {
       flex: 1;
       min-width: 200px;
+      display: flex;
+      flex-direction: column;
     }
 
-    button {
-      padding: 10px 20px;
+    .form-group label {
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-group input {
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn-submit,
+    button[type="submit"] {
+      padding: 10px 16px;
       background-color: #007bff;
-      border: none;
       color: white;
+      border: none;
       border-radius: 5px;
       cursor: pointer;
-      transition: 0.3s;
+      font-size: 15px;
     }
 
-    button:hover {
+    .btn-submit:hover,
+    button[type="submit"]:hover {
       background-color: #0056b3;
     }
 
@@ -82,10 +104,11 @@
     }
 
     a.btn {
-      padding: 5px 10px;
+      padding: 6px 12px;
       text-decoration: none;
-      border-radius: 4px;
+      border-radius: 5px;
       color: white;
+      font-size: 14px;
     }
 
     .edit {
@@ -102,156 +125,112 @@
 
     .back-link {
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 30px;
       text-decoration: none;
       color: #007bff;
+      font-weight: bold;
     }
 
     .back-link:hover {
       text-decoration: underline;
     }
 
-    .entry-form .form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  margin-bottom: 20px;
-}
+    @media screen and (max-width: 768px) {
+      .form-row {
+        flex-direction: column;
+      }
 
-.entry-form .form-group {
-  display: flex;
-  flex-direction: column;
-}
+      table, th, td {
+        font-size: 14px;
+      }
 
-.entry-form label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
-.entry-form {
-  margin: 20px auto;
-  width: 95%;
-  background: #fff;
-  padding: 20px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  border-radius: 8px;
-}
+      .btn-submit, button[type="submit"] {
+        width: 100%;
+      }
 
-.form-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.form-group {
-  flex: 1;
-  min-width: 150px;
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  color: #333;
-}
-
-.form-group input {
-  padding: 5px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.btn-submit {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
+      a.btn {
+        display: inline-block;
+        margin: 3px 0;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Marks Management</h2>
+    <h2>Marks Management</h2> 
+
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">Logout</button>
+    </form>
 
     <form method="POST" class="entry-form">
-  {% csrf_token %}
-  <div class="form-row">
-    <div class="form-group">
-      <label>GR No:</label>
-      <input type="text" id="gr_no" name="gr_no" placeholder="Enter GR No" required>
-    </div>
+      {% csrf_token %}
+      <div class="form-row">
+        <div class="form-group">
+          <label>GR No:</label>
+          <input type="text" id="gr_no" name="gr_no" placeholder="Enter GR No" required>
+        </div>
+        <div class="form-group" style="align-self: end;">
+          <button type="button" class="btn-submit" onclick="fetchStudent()">Fetch</button>
+        </div>
+      </div>
 
-    <div class="form-group" style="align-self: end;">
-      <button type="button" class="btn-submit" onclick="fetchStudent()">Fetch</button>
-    </div>
-  </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Class:</label>
+          <input type="text" id="student_class" name="Class" required>
+        </div>
+      </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label>Name:</label>
-      <input type="text" id="name" name="name" required>
-    </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Subject 1:</label>
+          <input type="number" name="sub1" required>
+        </div>
+        <div class="form-group">
+          <label>Subject 2:</label>
+          <input type="number" name="sub2" required>
+        </div>
+        <div class="form-group">
+          <label>Subject 3:</label>
+          <input type="number" name="sub3" required>
+        </div>
+      </div>
 
-    <div class="form-group">
-      <label>Class:</label>
-      <input type="text" id="student_class" name="Class" required>
-    </div>
-  </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Subject 4:</label>
+          <input type="number" name="sub4" required>
+        </div>
+        <div class="form-group">
+          <label>Subject 5:</label>
+          <input type="number" name="sub5" required>
+        </div>
+        <div class="form-group">
+          <label>Subject 6:</label>
+          <input type="number" name="sub6" required>
+        </div>
+        <div class="form-group">
+          <label>Subject 7:</label>
+          <input type="number" name="sub7" required>
+        </div>
+      </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label>Subject 1:</label>
-      <input type="number" name="sub1" required>
-    </div>
+      <div class="form-row">
+        <div class="form-group" style="align-self: end;">
+          <button type="submit" class="btn-submit">Submit</button>
+        </div>
+      </div>
+    </form>
 
-    <div class="form-group">
-      <label>Subject 2:</label>
-      <input type="number" name="sub2" required>
-    </div>
-
-    <div class="form-group">
-      <label>Subject 3:</label>
-      <input type="number" name="sub3" required>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group">
-      <label>Subject 4:</label>
-      <input type="number" name="sub4" required>
-    </div>
-
-    <div class="form-group">
-      <label>Subject 5:</label>
-      <input type="number" name="sub5" required>
-    </div>
-
-    <div class="form-group">
-      <label>Subject 6:</label>
-      <input type="number" name="sub6" required>
-    </div>
-
-    <div class="form-group">
-      <label>Subject 7:</label>
-      <input type="number" name="sub7" required>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group" style="align-self: end;">
-      <button type="submit" class="btn-submit">Submit</button>
-    </div>
-  </div>
-</form>
     <table>
       <tr>
-        <th>Gr bo</th>
+        <th>Gr No</th>
         <th>Name</th>
         <th>Class</th>
         <th>Subjects</th>
@@ -262,7 +241,7 @@
       {% for f in marks %}
       <tr>
         <td>{{ f.gr_no }}</td>
-        <td>{{ f.name }}</td>
+        <td><b>{{ f.name }}</b></td>
         <td>{{ f.student_class }}</td>
         <td>{{ f.sub1 }}, {{ f.sub2 }}, {{ f.sub3 }}, {{ f.sub4 }}, {{ f.sub5 }}, {{ f.sub6 }}, {{ f.sub7 }}</td>
         <td>{{ f.total }}</td>
@@ -280,20 +259,20 @@
   </div>
 
   <script>
-function fetchStudent() {
-    var grNo = document.getElementById("gr_no").value;
+    function fetchStudent() {
+      var grNo = document.getElementById("gr_no").value;
 
-    fetch(`/marks/fetch_student/${grNo}/`)
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
+      fetch(`/marks/fetch_student/${grNo}/`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
             document.getElementById("name").value = data.name;
             document.getElementById("student_class").value = data.student_class;
-        } else {
+          } else {
             alert("Student not found!");
-        }
-    });
-}
-</script>
+          }
+        });
+    }
+  </script>
 </body>
 </html>

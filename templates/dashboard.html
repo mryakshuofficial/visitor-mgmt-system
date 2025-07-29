@@ -117,7 +117,7 @@
         }
 
         /* Marquee */
-        marquee {
+        .marquee {
             margin: 20px 0;
             color: red;
             font-weight: bold;
@@ -133,6 +133,43 @@
             border-bottom-left-radius: 12px;
             border-bottom-right-radius: 12px;
         }
+        small{
+            align-items: center;
+            margin-top: 2px;
+        }
+        .notice_marquee{
+            font-size: 10px;
+        }
+         {% comment %} for table {% endcomment %}
+         .notice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.notice-table th, .notice-table td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.notice-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: #333;
+}
+
+.notice-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.notice-table tr:hover {
+    background-color: #f1f7ff;
+    transition: 0.3s ease;
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -175,6 +212,10 @@
             <div class="sidebar-card">
                 <a href="{% url 'submit_feedback' %}"><i class="fas fa-comments"></i> Feedback</a>
             </div>
+
+            <div class="sidebar-card">
+                <a href="/"><i class="fas fa-comments"></i>notice<small><marquee class='notice_marquee'>can add only admin</marquee></small></a>
+            </div>
         </div>
 
         <!-- Main Content -->
@@ -182,10 +223,21 @@
 
             <!-- Marquee Notices -->
             {% if notices %}
-            <marquee behavior="alternate" direction="left" scrollamount="7">
-                {% for notice in notices %}
-                    📢 {{ notice.title }} - {{ notice.content }} &nbsp;&nbsp;&nbsp;
-                {% endfor %}
+            <marquee class='marquee' behavior="alternate" direction="left" scrollamount="7">
+                <table class="notice-table">
+                    <tr>
+                        <th>Title</th>
+                        <th></th>
+                        <th>Content</th>
+                    </tr>
+                    {% for notice in notices %}
+                    <tr>
+                        <td>📢 {{ notice.title }}</td>
+                        <td align='center'>&nbsp;-</td>
+                        <td>{{ notice.content }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </marquee>
             {% endif %}
 

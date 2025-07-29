@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -12,7 +13,7 @@
         }
 
         .profile-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 50px auto;
             background: #fff;
             border-radius: 15px;
@@ -27,36 +28,31 @@
             object-fit: cover;
             border: 4px solid #4CAF50;
             display: block;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 20px;
         }
 
         h2 {
-            margin: 10px 0;
-            font-size: 26px;
             text-align: center;
+            margin-bottom: 20px;
             color: #333;
         }
 
-        .info {
-            margin-top: 25px;
-        }
-
         .info p {
-            font-size: 18px;
-            margin: 8px 0;
+            font-size: 17px;
+            margin: 6px 0;
             color: #555;
         }
 
         .info p span {
             font-weight: bold;
-            color: #222;
+            color: #111;
         }
 
-        .marksheet {
-            margin-top: 30px;
+        .section {
+            margin-top: 40px;
         }
 
-        .marksheet h3 {
+        h3 {
             text-align: center;
             margin-bottom: 15px;
             color: #4CAF50;
@@ -65,7 +61,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         table, th, td {
@@ -88,20 +84,31 @@
         }
 
         .logout {
-            margin-top: 30px;
             text-align: center;
+            margin-top: 40px;
         }
 
         .logout a {
-            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
             padding: 10px 20px;
-            background: #e74c3c;
+            background: #3498db;
             color: white;
             border-radius: 8px;
+            text-decoration: none;
             font-weight: bold;
+            transition: background 0.3s;
         }
 
         .logout a:hover {
+            background: #2c80b4;
+        }
+
+        .logout a.logout-btn {
+            background: #e74c3c;
+        }
+
+        .logout a.logout-btn:hover {
             background: #c0392b;
         }
 
@@ -121,23 +128,22 @@
 
 <div class="profile-container">
     <img src="{{ student.photo_path.url }}" alt="Profile Photo" class="profile-img">
-    <h2>{{ student.fname }} {{ student.lname }} {{ student.sername }}</h2>
+    <h2>{{ student.fname }} {{ student.lname }} {{ student.surname }}</h2>
 
     <div class="info">
         <p><span>GR Number:</span> {{ student.gr_no }}</p>
         <p><span>Village:</span> {{ student.village }}</p>
         <p><span>Mobile:</span> {{ student.mobile }}</p>
         <p><span>Email:</span> {{ student.email }}</p>
-        <p><span>Aadhar:</span> **** **** {{ student.aadhar_number|slice:"-4:" }}</p>
+        <p><span>Aadhar:</span> **** **** {{ student.aadhar|slice:"-4:" }}</p>
     </div>
 
-    <div class="marksheet">
+    <div class="section">
         <h3>Marksheet</h3>
         {% if marks %}
         <table>
             <tr>
-                {% comment %} <th>Class</th> {% endcomment %}
-                <th>Gr No</th>
+                <th>GR No</th>
                 <th>Name</th>
                 <th>Gujarati</th>
                 <th>Hindi</th>
@@ -151,7 +157,6 @@
             </tr>
             {% for m in marks %}
             <tr>
-                {% comment %} <td>{{ m.student_class }}</td> {% endcomment %}
                 <td>{{ m.gr_no }}</td>
                 <td>{{ m.name }}</td>
                 <td>{{ m.sub1 }}</td>
@@ -170,85 +175,35 @@
         <p style="text-align:center;">No marks data available for this student.</p>
         {% endif %}
     </div>
-<div class="marksheet">
-    <h3 style="text-align:center;">Uploaded Documents</h3>
 
-    {% if documents %}
-    <table>
-        <tr>
-            <th>Document Type</th>
-            <th>Uploaded At</th>
-            <th>Download</th>
-        </tr>
-        {% for doc in documents %}
-        <tr>
-            <td>{{ doc.document_type|capfirst }}</td>
-            <td>{{ doc.uploaded_at|date:"Y-m-d H:i" }}</td>
-            <td><a href="{{ doc.document_file.url }}" download>Download</a></td>
-        </tr>
-        {% endfor %}
-    </table>
-    {% else %}
-    <p style="text-align:center;">No documents uploaded yet.</p>
-    {% endif %}
-</div>
+    <div class="section">
+        <h3>Uploaded Documents</h3>
+        {% if documents %}
+        <table>
+            <tr>
+                <th>Document Type</th>
+                <th>Uploaded At</th>
+                <th>Download</th>
+            </tr>
+            {% for doc in documents %}
+            <tr>
+                <td>{{ doc.document_type|capfirst }}</td>
+                <td>{{ doc.uploaded_at|date:"Y-m-d H:i" }}</td>
+                <td><a href="{{ doc.document_file.url }}" download>Download</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p style="text-align:center;">No documents uploaded yet.</p>
+        {% endif %}
+    </div>
 
     <div class="logout">
-        <a href="{% url 'student_login' %}">Logout</a>
+        <a href="{% url 'student_login' %}" class="logout-btn">Logout</a>
+        <a href="{% url 'change_password' %}?gr_no={{ student.gr_no }}">Change Password</a>
+        <a href="{% url 'forgot_password' %}?gr_no={{ student.gr_no }}">Forgot Password</a>
     </div>
 </div>
 
 </body>
 </html>
-
-
-{% comment %} <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Student Profile</title>
-</head>
-<body>
-    <!-- templates/student_profile_view.html -->
-<h2>Welcome, {{ student.fname }} {{ student.surname }}</h2>
-<p><strong>GR No:</strong> {{ student.gr_no }}</p>
-<p><strong>Mobile:</strong> {{ student.mobile }}</p>
-<img src="{{ student.photo_path.url }}" width="120px"><br><br>
-
-<h3>Marksheet</h3>
-{% if marks %}
-<table border="1">
-  <tr>
-    <th>Gr No</th>
-    <th>Name</th>
-    <th>Gujarati</th>
-    <th>Hindi</th>
-    <th>English</th>
-    <th>Sanskrit</th>
-    <th>Science</th>
-    <th>Social Sci</th>
-    <th>Computer</th>
-    <th>Total</th>
-    <th>Percentage</th>
-  </tr>
-  {% for m in marks %}
-  <tr>
-    <td>{{ m.gr_no }}</td>
-    <td>{{ m.name }}</td>
-    <td>{{ m.sub1 }}</td>
-    <td>{{ m.sub2 }}</td>
-    <td>{{ m.sub3 }}</td>
-    <td>{{ m.sub4 }}</td>
-    <td>{{ m.sub5 }}</td>
-    <td>{{ m.sub6 }}</td>
-    <td>{{ m.sub7 }}</td>
-    <td>{{ m.total }}</td>
-    <td>{{ m.percentage }}%</td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p>No marks data available for this student.</p>
-{% endif %}
-
-</body>
-</html> {% endcomment %}

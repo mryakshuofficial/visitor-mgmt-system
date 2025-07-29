@@ -7,8 +7,10 @@ from django.http import JsonResponse
 from masterstudent.models import MasterStudent
 
 
+
+
 # Create your views here.
-# @login_required
+@login_required
 def marks_index(request):
     if request.method =='POST':
         gr_no = request.POST.get('gr_no')
@@ -98,5 +100,7 @@ def fetch_student(request, gr_no):
         data = {'success': False}
     return JsonResponse(data)
 
-
+def logout_user(request):
+    logout(request)
+    return redirect('login')  # 👈 change if your login URL name is different
 

@@ -1,5 +1,6 @@
 import pandas as pd
 from .models import MasterStudent
+from django.contrib.auth.hashers import make_password
 
 def load_students_from_excel(file_path='masterstudent.xlsx'):
     df = pd.read_excel(file_path)
@@ -23,5 +24,6 @@ def load_students_from_excel(file_path='masterstudent.xlsx'):
                 email = row.get('email'),
                 gender = row.get('gender'),
                 dob = row.get('DOB'),
-                photo_path = row.get('Photo Path')
+                photo_path = row.get('Photo Path'),
+                password = make_password('admin'),
             )

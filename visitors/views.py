@@ -102,13 +102,15 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
         user = authenticate(request,username=username,password=password)
-        if user :
-            login(request,user)
-            return redirect('visitors_index')
+
+        if user is not None:
+            login(request, user)
+            next_url = request.GET.get('next')  # 🧠 check if redirected from protected page
+            return redirect(next_url) if next_url else redirect('dashboard')  # 👈 safe fallback
         else:
-            return render(request, 'visitors/login.html', {'error': 'Invalid credentials'})
+            messages.error(request, "Invalid credentials")
+            return redirect("login")
     
     return render(request, 'visitors/login.html')
 

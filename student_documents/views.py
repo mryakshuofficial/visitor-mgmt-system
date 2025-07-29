@@ -7,6 +7,7 @@ import os
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from .models import StudentDocument, DOCUMENT_TYPES
+from django.contrib.auth import logout
 
 # Create your views here.
 @login_required
@@ -47,3 +48,7 @@ def upload_document(request):
 
 def upload_success(request):
     return render(request, 'student_documents/success.html')
+
+def logout_user(request):
+    logout(request)
+    return redirect('login')
