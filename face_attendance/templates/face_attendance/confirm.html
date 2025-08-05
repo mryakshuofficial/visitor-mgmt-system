@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Attendance</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f7f7;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info {
+            margin-bottom: 20px;
+        }
+
+        .info p {
+            margin: 6px 0;
+            font-size: 16px;
+        }
+
+        .info p strong {
+            width: 120px;
+            display: inline-block;
+        }
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px;
+            flex: 1;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button[value="yes"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        button[value="no"] {
+            background-color: #f44336;
+            color: white;
+        }
+
+        @media screen and (max-width: 480px) {
+            .info p strong {
+                width: 100px;
+            }
+
+            form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Is this you?</h2>
+        <div class="info">
+            <p><strong>GR No:</strong> {{ student.gr_no }}</p>
+            <p><strong>Name:</strong> {{ student.fname }} {{ student.lname }} {{ student.surname }}</p>
+            <p><strong>Class:</strong> {{ student.student_class }}</p>
+            <p><strong>Mobile:</strong> {{ student.mobile }}</p>
+        </div>
+        <form method="POST">
+            {% csrf_token %}
+            <button name="confirm" value="yes">✅ Yes, Mark My Attendance</button>
+            <button name="confirm" value="no">❌ No</button>
+        </form>
+    </div>
+</body>
+</html>

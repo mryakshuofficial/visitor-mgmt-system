@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'student_documents',
     'feedback',
     'notice',
+    'face_attendance',
 ]
 
 MIDDLEWARE = [
@@ -142,5 +143,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'yash0808080808@gmail.com'         # ✅ tumhara Gmail ID
+EMAIL_HOST_USER = 'yash0808080808@gmail.com'         #  tumhara Gmail ID
 EMAIL_HOST_PASSWORD = 'mrdz ceka jnxx nudb'   # 🔐 App Password (not Gmail password)

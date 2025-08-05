@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            width: 350px;
+            text-align: left;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .info p {
+            margin: 12px 0;
+            font-size: 16px;
+            color: #444;
+        }
+        .info p strong {
+            color: #000;
+        }
+        .status {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 25px;
+            text-align: center;
+        }
+        .present {
+            color: green;
+        }
+        .absent {
+            color: red;
+        }
+        .home-btn {
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            padding: 10px 0;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .home-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Face Recognition Result</h2>
+        {% if student %}
+            <div class="info">
+                <p><strong>GR No:</strong> {{ student.gr_no }}</p>
+                <p><strong>Name:</strong> {{ student.fname }} {{ student.lname }} {{ student.surname }}</p>
+                <p><strong>Class:</strong> {{ student.student_class }}</p>
+            </div>
+            <p class="status present">✅ Present</p>
+        {% else %}
+            <p class="status absent">❌ No face recognized or unknown face.</p>
+        {% endif %}
+
+        <!-- ✅ Button to go to home -->
+        <a href="/" class="home-btn">Go to Dashboard</a>
+    </div>
+</body>
+</html>

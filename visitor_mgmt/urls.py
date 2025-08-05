@@ -33,7 +33,8 @@ urlpatterns = [
     path('masterstudent/', include('masterstudent.urls')),
     path('documents/', include('student_documents.urls')),
     path('feedback/', include('feedback.urls')),
-    # path('notice/', include('notice.urls')),   ye admin panel se karna hai. 
+    # path('notice/', include('notice.urls')),   ye admin panel se karna hai.
+    path('face/', include('face_attendance.urls')),  
 
 ] 
 if settings.DEBUG:

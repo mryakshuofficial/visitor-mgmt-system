@@ -216,6 +216,14 @@
             <div class="sidebar-card">
                 <a href="/"><i class="fas fa-comments"></i>notice<small><marquee class='notice_marquee'>can add only admin</marquee></small></a>
             </div>
+
+            <div class="sidebar-card">
+                <a href="{% url 'capture_face' %}"><i class="fas fa-plus"></i><i class="fas fa-camera"></i> Add Face </a>
+            </div class="sidebar-card">
+
+            <div class="sidebar-card">
+            <a href="{% url 'recognize_face' %}"><i class="fas fa-camera"></i>Face Attendance</a>
+            </div>
         </div>
 
         <!-- Main Content -->

@@ -120,7 +120,7 @@
         <tr>
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <td>{{ student.gr_no }}</td>
+                <td><input value='{{ student.gr_no }}' name='gr_no'></td>
                 <td>{{ student.name }}</td>
                 <td>{{ student.village }}</td>
                 <td>
